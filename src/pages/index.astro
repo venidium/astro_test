@@ -7,8 +7,8 @@ import Header from '../components/Header.astro';
 const { title } = Astro.props;
 
 //microCMS呼び出し
-import { getBlogs } from "../library/microcms";
-const response = await getBlogs({ fields: ["id", "title"] });
+// import { getBlogs } from "../library/microcms";
+// const response = await getBlogs({ fields: ["id", "title"] });
 ---
 
 <Header title={title}/>
