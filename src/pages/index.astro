@@ -1,24 +1,38 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
 import Card from '../components/Card.astro';
-
-import Header from '../components/Header.astro';
-const { title } = Astro.props;
-
-//microCMS呼び出し
-// import { getBlogs } from "../library/microcms";
-// const response = await getBlogs({ fields: ["id", "title"] });
 ---
 
-<Header title={title}/>
-
-<Layout title="My first blog with Astro">
-  <main>
-    <ul>
-    
-    </ul>
-  </main>
+<Layout title="Welcome to Astro.">
+	<main>
+		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
+		<p class="instructions">
+			To get started, open the directory <code>src/pages</code> in your project.<br />
+			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
+		</p>
+		<ul role="list" class="link-card-grid">
+			<Card
+				href="https://docs.astro.build/"
+				title="Documentation"
+				body="Learn how Astro works and explore the official API docs."
+			/>
+			<Card
+				href="https://astro.build/integrations/"
+				title="Integrations"
+				body="Supercharge your project with new frameworks and libraries."
+			/>
+			<Card
+				href="https://astro.build/themes/"
+				title="Themes"
+				body="Explore a galaxy of community-built starter themes."
+			/>
+			<Card
+				href="https://astro.build/chat/"
+				title="Community"
+				body="Come say hi to our amazing Discord community. ❤️"
+			/>
+		</ul>
+	</main>
 </Layout>
 
 <style>
@@ -27,15 +41,6 @@ const { title } = Astro.props;
 		padding: 1.5rem;
 		max-width: 60ch;
 	}
-  canvas {
-  background: #101010;
-  box-shadow: 0 0 0 2px #191919;
-  display: block;
-  left: 50%;
-  margin: -100px 0 0 -200px;
-  position: absolute;
-  top: 50%;
-} 
 	h1 {
 		font-size: 3rem;
 		font-weight: 800;
