@@ -5,6 +5,9 @@ import Card from '../components/Card.astro';
 import Header from '../components/Header.astro';
 const { title } = Astro.props
 
+//microCMS呼び出し
+import { getBlogs } from "../library/microcms";
+const response = await getBlogs({ fields: ["id", "title"] });
 
 ---
 
@@ -19,7 +22,13 @@ const { title } = Astro.props
     <a href="./about">about</a>
     <p>blog</p>
     <ul>
-     
+      {
+        response.contents.map((content: any) => (
+          <li>
+            <a href={content.id}>{content.title}</a>
+          </li>
+        ))
+      }
     </ul>
     <img src="/favicon.svg" />
 
