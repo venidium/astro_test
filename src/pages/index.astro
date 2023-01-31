@@ -1,8 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+
+import Header from '../components/Header.astro';
+const { title } = Astro.props
 ---
 
+<Header title={title}/>
 <Layout title="Welcome to Astro.">
 	<main>
 		<h1>Welcome to 追加01 2回目<span class="text-gradient">Astro</span></h1>
