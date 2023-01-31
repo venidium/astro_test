@@ -5,9 +5,6 @@ import Card from '../components/Card.astro';
 import Header from '../components/Header.astro';
 const { title } = Astro.props
 
-//microCMS呼び出し
-import { getBlogs } from "../library/microcms";
-const { contents: posts } = await getBlogs({ fields: ["id", "title", "publishedAt"] });
 
 ---
 
