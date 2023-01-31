@@ -8,61 +8,23 @@ const { title } = Astro.props
 
 //microCMS呼び出し
 import { getBlogs } from "../library/microcms";
-const { contents: posts } = await getBlogs({ fields: ["id", "title", "publishedAt"] });
-
+const response = await getBlogs({ fields: ["id", "title"] });
 ---
 
 <Header title={title}/>
-<Layout title="Welcome to Astro. Dear Cats ">
-	<main>
-		<h1>Welcome to 追加01  2回目<span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-    <a href="./about">about</a>
-    <p>blogsa</p>
+
+<Layout title="My first blog with Astro">
+  <main>
     <ul>
       {
-        posts.map((post) => (
+        response.contents.map((content: any) => (
           <li>
-            <time datetime={post.publishedAt}>
-              {new Date(post.publishedAt).toLocaleDateString('ja-JP')}
-            </time>
-            <a href={`/blog/${post.id}`}>{post.title}</a>
+            <a href={content.id}>{content.title}</a>
           </li>
         ))
       }
     </ul>
-    <img src="/favicon.svg" /> 
-
-    
-
-    
-
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
+  </main>
 </Layout>
 
 <style>
