@@ -4,11 +4,41 @@ import Card from '../components/Card.astro';
 
 //microCMS呼び出し
 import { getBlogs } from "../library/microcms";
-let response = await getBlogs({ fields: ['id'] });
+
+import { microcmsApiClient } from "../library/microcms"
+
+const contents = await microcmsApiClient.getList({endpoint: 'blog'})
+const posts = contents.contents.map(c => {
+    const title = c.title
+    const description = c.description
+    const date = c.date
+    const image = c.image.url
+    const alias = c.id
+    return {
+        title,
+        alias,
+        description,
+        date,
+        image,
+    }
+})
 
 ---
 
-
+  <ul>
+        {posts.map((post) => (
+          <li>
+            <figure>
+              <img src={`${post.image}`} alt={`${post.description}`} />
+            </figure>
+            <a href={`/posts/${post.alias}/`}>
+              <h2>{post.title}</h2>
+            </a>
+            <time>{post.date}</time>
+            <p>{post.description}</p>
+          </li>
+        ))}
+      </ul>
 
 <Layout title="Welcome to Astro.">
 	<main>
