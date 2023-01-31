@@ -22,16 +22,7 @@ const { contents: posts } = await getBlogs({ fields: ["id", "title", "publishedA
     <a href="./about">about</a>
     <p>blog</p>
     <ul>
-      {
-        posts.map((post) => (
-          <li>
-            <time datetime={post.publishedAt}>
-              {new Date(post.publishedAt).toLocaleDateString('ja-JP')}
-            </time>
-            <a href={`/blog/${post.id}`}>{post.title}</a>
-          </li>
-        ))
-      }
+     
     </ul>
     <img src="/favicon.svg" />
 
