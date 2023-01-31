@@ -6,11 +6,9 @@ import Header from '../components/Header.astro';
 const { title } = Astro.props
 
 
-import { getCats } from '@library/useApi';
-
-// getCats() 関数で一覧データを取得
-const data = await getCats({ limit: 1000 });
-const cats = data.contents;
+//microCMS呼び出し
+import { getBlogs } from "../library/microcms";
+const { contents: posts } = await getBlogs({ fields: ["id", "title", "publishedAt"] });
 
 ---
 
@@ -25,21 +23,16 @@ const cats = data.contents;
     <a href="./about">about</a>
     <p>blogsa</p>
     <ul>
-      {cats.map((cat) => {
-        return (
+      {
+        posts.map((post) => (
           <li>
-            <a href={`/blog/${cat.id}`}>
-              <img
-                src={cat.image.image.url}
-                height={cat.image.image.height}
-                width={cat.image.image.width}
-                alt={cat.image.alt}
-              />
-              // ...略
-            </a>
+            <time datetime={post.publishedAt}>
+              {new Date(post.publishedAt).toLocaleDateString('ja-JP')}
+            </time>
+            <a href={`/blog/${post.id}`}>{post.title}</a>
           </li>
-        );
-      })}
+        ))
+      }
     </ul>
     <img src="/favicon.svg" /> 
 
