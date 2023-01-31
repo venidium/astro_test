@@ -5,14 +5,17 @@ import Card from '../components/Card.astro';
 import Header from '../components/Header.astro';
 const { title } = Astro.props
 
-//microCMS呼び出し
-import { getBlogs } from "../library/microcms";
-const response = await getBlogs({ fields: ["id", "title"] });
+
+import { getCats } from '@library/useApi';
+
+// getCats() 関数で一覧データを取得
+const data = await getCats({ limit: 1000 });
+const cats = data.contents;
 
 ---
 
 <Header title={title}/>
-<Layout title="Welcome to Astro.">
+<Layout title="Welcome to Astro. Dear Cats ">
 	<main>
 		<h1>Welcome to 追加01  2回目<span class="text-gradient">Astro</span></h1>
 		<p class="instructions">
@@ -22,13 +25,21 @@ const response = await getBlogs({ fields: ["id", "title"] });
     <a href="./about">about</a>
     <p>blogsa</p>
     <ul>
-      {
-        response.contents.map((content: any) => (
+      {cats.map((cat) => {
+        return (
           <li>
-            <a href={content.id}>{content.title}</a>
+            <a href={`/blog/${cat.id}`}>
+              <img
+                src={cat.image.image.url}
+                height={cat.image.image.height}
+                width={cat.image.image.width}
+                alt={cat.image.alt}
+              />
+              // ...略
+            </a>
           </li>
-        ))
-      }
+        );
+      })}
     </ul>
     <img src="/favicon.svg" /> 
 
