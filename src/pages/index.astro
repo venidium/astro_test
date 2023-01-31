@@ -4,6 +4,11 @@ import Card from '../components/Card.astro';
 
 import Header from '../components/Header.astro';
 const { title } = Astro.props
+
+//microCMS呼び出し
+import { getBlogs } from "../library/microcms";
+const { contents: posts } = await getBlogs({ fields: ["id", "title", "publishedAt"] });
+
 ---
 
 <Header title={title}/>
@@ -15,6 +20,19 @@ const { title } = Astro.props
 			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
 		</p>
     <a href="./about">about</a>
+
+    <ul>
+      {
+        posts.map((post) => (
+          <li>
+            <time datetime={post.publishedAt}>
+              {new Date(post.publishedAt).toLocaleDateString('ja-JP')}
+            </time>
+            <a href={`/blog/${post.id}`}>{post.title}</a>
+          </li>
+        ))
+      }
+    </ul>
     <img src="/favicon.svg" />
 
     <script>
@@ -165,6 +183,8 @@ const { title } = Astro.props
         
     loop();
     </script>
+
+    
 
 		<ul role="list" class="link-card-grid">
 			<Card
