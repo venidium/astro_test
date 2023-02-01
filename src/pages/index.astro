@@ -2,46 +2,31 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 
-//microCMS呼び出し
-import { getBlogs } from "../library/microcms";
+import { contentfulClient } from "../lib/contentful";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import type { Document } from "@contentful/rich-text-types";
 
-import { microcmsApiClient } from "../library/microcms"
+interface BlogPost {
+    title: string,
+    content: Document
+}
 
-const contents = await microcmsApiClient.getList({endpoint: 'blog'})
-const posts = contents.contents.map(c => {
-    const title = c.title
-    const description = c.description
-    const date = c.date
-    const image = c.image.url
-    const alias = c.id
-    return {
-        title,
-        alias,
-        description,
-        date,
-        image,
-    }
-})
+const entries = await contentfulClient.getEntries<BlogPost>({
+  content_type: "blog",
+});
 
 ---
 
-  <ul>
-        {posts.map((post) => (
-          <li>
-            <figure>
-              <img src={`${post.image}`} alt={`${post.description}`} />
-            </figure>
-            <a href={`/posts/${post.alias}/`}>
-              <h2>{post.title}</h2>
-            </a>
-            <time>{post.date}</time>
-            <p>{post.description}</p>
-          </li>
-        ))}
-      </ul>
-
 <Layout title="Welcome to Astro.">
 	<main>
+    
+    {entries.items.map((item) => (
+    <section>
+      <h2>{item.fields.name}</h2>
+      <article set:html={documentToHtmlString(items.fields.content)}></article>
+    </section>
+    ))}
+
 		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
 		<p class="instructions">
 			To get started, open the directory <code>src/pages</code> in your project.<br />

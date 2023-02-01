@@ -1,1 +1,5 @@
-/// <reference types="astro/client" />
+interface ImportMetaEnv {
+  readonly CONTENTFUL_SPACE_ID: v46dtqa39i4h;
+  readonly CONTENTFUL_DELIVERY_TOKEN: zVfM3xEobMeZxQQMXS82X6AGfAkWPraLR5wfSrh2xT4;
+  readonly CONTENTFUL_PREVIEW_TOKEN: 1dJdFBEKpJ5eCMHfRrTa0MX8N9kzZGPBzT8Wklp7qis;
+}
